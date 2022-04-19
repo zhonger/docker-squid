@@ -41,11 +41,19 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64,linux/mips64le,linux/ppc64le,linux/s390x
+          platforms: |
+            linux/386
+            linux/amd64
+            linux/arm/v5
+            linux/arm/v7
+            linux/arm64
+            linux/mips64le
+            linux/ppc64le
+            linux/s390x
           push: true
-          build-args:
+          build-args: |
             APP_NAME=${{ env.APP_NAME }}
             APP_VERSION=${{ env.APP_VERSION }}
-          tags:
+          tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
             ${{ env.DOCKERHUB_REPO }}:${{ env.APP_VERSION }}
