@@ -13,6 +13,8 @@
     - [LDAP](#ldap-1)
     - [LDAPS](#ldaps-1)
 - [Environment varibales](#environment-varibales)
+  - [SQUID_SSH](#squid_ssh)
+  - [SQUID_RSYNC](#squid_rsync)
   - [LDAP_ENABLE](#ldap_enable)
   - [LDAP_HOST](#ldap_host)
   - [LDAP_PORT](#ldap_port)
@@ -68,6 +70,8 @@ services:
     ports:
       - "3128:3128"
     volumes:
+      - SQUID_SSH=true
+      - SQUID_RSYNC=false
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     restart: always
@@ -90,6 +94,8 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     environment: 
+      - SQUID_SSH=true
+      - SQUID_RSYNC=false
       - LDAP_ENABLE=true
       - LDAP_HOST=yourldap.domain.com
       - LDAP_PORT=389
@@ -117,6 +123,8 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     environment: 
+      - SQUID_SSH=true
+      - SQUID_RSYNC=false
       - LDAP_ENABLE=true
       - LDAP_HOST=yourldap.domain.com
       - LDAP_PORT=636
@@ -135,6 +143,22 @@ docker-compose up -d
 ```
 
 # Environment varibales
+
+## SQUID_SSH
+
+It allows to enable SSH proxy.
+
+```
+SQUID_SSH=true
+```
+
+## SQUID_RSYNC
+
+It allows to enable RSYNC proxy.
+
+```
+SQUID_RSYNC=false
+```
 
 ## LDAP_ENABLE
 
