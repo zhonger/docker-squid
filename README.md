@@ -108,7 +108,7 @@ version: '3.2'
 
 services: 
   squid:
-    image: diouxx/squid
+    image: zhonger/squid
     container_name: squid
     hostname: squid
     ports:
