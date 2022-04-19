@@ -13,12 +13,14 @@
     - [LDAP](#ldap-1)
     - [LDAPS](#ldaps-1)
 - [Environment varibales](#environment-varibales)
-  - [LDAP_ENABLE](#ldapenable)
-  - [LDAP_HOST](#ldaphost)
-  - [LDAP_PORT](#ldapport)
-  - [LDAP_DN](#ldapdn)
-  - [LDAP_ATTRIBUT](#ldapattribut)
-  - [PROXY_NAME](#proxyname)
+  - [LDAP_ENABLE](#ldap_enable)
+  - [LDAP_HOST](#ldap_host)
+  - [LDAP_PORT](#ldap_port)
+  - [LDAP_BindDN](#ldap_binddn)
+  - [LDAP_BindPass](#ldap_bindpass)
+  - [LDAP_DN](#ldap_dn)
+  - [LDAP_ATTRIBUT](#ldap_attribut)
+  - [PROXY_NAME](#proxy_name)
 
 # Introduction
 
@@ -40,13 +42,13 @@ docker run --name squid --hostname squid -p 3128:3128 -d diouxx/squid
 ### LDAP
 
 ```sh
-docker run --name squid --hostname squid -e LDAP_ENABLE=true -e LDAP_HOST=yourldap.domain.com -e LDAP_PORT=389 -e LDAP_DN="ou=Users,dc=yourdomain,dc=com" -e LDAP_ATTRIBUT="uid=%s" -e PROXY_NAME="Proxy Display Name" -p 3128:3128 -d diouxx/squid
+docker run --name squid --hostname squid -e LDAP_ENABLE=true -e LDAP_HOST=yourldap.domain.com -e LDAP_PORT=389 -e LDAP_BindDN="cn=admin,dc=yourdomain,dc=com" -e LDAP_BindPass="********" -e LDAP_DN="ou=Users,dc=yourdomain,dc=com" -e LDAP_ATTRIBUT="uid=%s" -e PROXY_NAME="Proxy Display Name" -p 3128:3128 -d diouxx/squid
 ```
 
 ### LDAPS
 
 ```sh
-docker run --name squid --hostname squid -e LDAP_ENABLE=true -e LDAP_HOST=yourldap.domain.com -e LDAP_PORT=636 -e LDAP_DN="ou=Users,dc=yourdomain,dc=com" -e LDAP_ATTRIBUT="uid=%s" -e PROXY_NAME="Proxy Display Name" -p 3128:3128 -d diouxx/squid
+docker run --name squid --hostname squid -e LDAP_ENABLE=true -e LDAP_HOST=yourldap.domain.com -e LDAP_PORT=636 -e LDAP_BindDN="cn=admin,dc=yourdomain,dc=com" -e LDAP_BindPass="********" -e LDAP_DN="ou=Users,dc=yourdomain,dc=com" -e LDAP_ATTRIBUT="uid=%s" -e PROXY_NAME="Proxy Display Name" -p 3128:3128 -d diouxx/squid
 ```
 
 # Deploy with docker-compose
@@ -60,7 +62,7 @@ version: '3.2'
 
 services: 
   squid:
-    image: diouxx/squid
+    image: zhonger/squid
     container_name: squid
     hostname: squid
     ports:
@@ -79,7 +81,7 @@ version: '3.2'
 
 services: 
   squid:
-    image: diouxx/squid
+    image: zhonger/squid
     container_name: squid
     hostname: squid
     ports:
@@ -91,6 +93,8 @@ services:
       - LDAP_ENABLE=true
       - LDAP_HOST=yourldap.domain.com
       - LDAP_PORT=389
+      - LDAP_BindDN="cn=admin,dc=yourdomain,dc=com"
+      - LDAP_BindPass="********"
       - LDAP_DN="ou=Users,dc=yourdomain,dc=com"
       - LDAP_ATTRIBUT="uid=%s"
       - PROXY_NAME="Proxy Display Name"
@@ -116,6 +120,8 @@ services:
       - LDAP_ENABLE=true
       - LDAP_HOST=yourldap.domain.com
       - LDAP_PORT=636
+      - LDAP_BindDN="cn=admin,dc=yourdomain,dc=com"
+      - LDAP_BindPass="********"
       - LDAP_DN="ou=Users,dc=yourdomain,dc=com"
       - LDAP_ATTRIBUT="uid=%s"
       - PROXY_NAME="Proxy Display Name"
@@ -154,13 +160,33 @@ LDAP_HOST=yourldap.domain.com
 
 Only use if LDAP_ENABLE is set to true
 
-Specifie the LDAP server port.
+Specifies the LDAP server port.
 By convention :
 * 389 to LDAP
 * 636 to LDAPS
 
 ```
 LDAP_PORT=636
+```
+
+## LDAP_BindDN
+
+Only use if LDAP_ENABLE is set to true
+
+Specifies the LDAP administrator username.
+
+```
+LDAP_BindDN="cn=admin,dc=yourdomain,dc=com"
+```
+
+## LDAP_BindPass
+
+Only use if LDAP_ENABLE is set to true
+
+Specifies the LDAP administrator password.
+
+```
+LDAP_BindPass="********"
 ```
 
 ## LDAP_DN

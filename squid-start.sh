@@ -18,7 +18,7 @@ function squid_config() {
 
 		case ${LDAP_PORT} in
 		389)
-                	echo -e "auth_param basic program /usr/lib/squid/basic_ldap_auth -b ${LDAP_DN} -f ${LDAP_ATTRIBUT} -h ${LDAP_HOST}:${LDAP_PORT}\nauth_param basic children 5\nauth_param basic realm ${PROXY_NAME}\nauth_param basic credentialsttl 2 hours\nacl ldapauth proxy_auth REQUIRED\nacl authenticated proxy_auth REQUIRED\nhttp_access allow ldapauth" >> /etc/squid/squid.conf
+                	echo -e "auth_param basic program /usr/lib/squid/basic_ldap_auth -D ${LDAP_BindDN} -w ${LDAP_BindPass} -b ${LDAP_DN} -f ${LDAP_ATTRIBUT} -h ${LDAP_HOST}:${LDAP_PORT}\nauth_param basic children 5\nauth_param basic realm ${PROXY_NAME}\nauth_param basic credentialsttl 2 hours\nacl ldapauth proxy_auth REQUIRED\nacl authenticated proxy_auth REQUIRED\nhttp_access allow ldapauth" >> /etc/squid/squid.conf
 			;;
 		636)
 			#check if TLS_REQCERT is present
@@ -28,7 +28,7 @@ function squid_config() {
                                 echo -e "TLS_REQCERT\tnever" >> /etc/ldap/ldap.conf
                         fi
 
-                	echo -e "auth_param basic program /usr/lib/squid/basic_ldap_auth -b ${LDAP_DN} -f ${LDAP_ATTRIBUT} -h ldaps://${LDAP_HOST}:${LDAP_PORT}\nauth_param basic children 5\nauth_param basic realm ${PROXY_NAME}\nauth_param basic credentialsttl 2 hours\nacl ldapauth proxy_auth REQUIRED\nacl authenticated proxy_auth REQUIRED\nhttp_access allow ldapauth" >> /etc/squid/squid.conf
+                	echo -e "auth_param basic program /usr/lib/squid/basic_ldap_auth -D ${LDAP_BindDN} -w ${LDAP_BindPass} -b ${LDAP_DN} -f ${LDAP_ATTRIBUT} -h ldaps://${LDAP_HOST}:${LDAP_PORT}\nauth_param basic children 5\nauth_param basic realm ${PROXY_NAME}\nauth_param basic credentialsttl 2 hours\nacl ldapauth proxy_auth REQUIRED\nacl authenticated proxy_auth REQUIRED\nhttp_access allow ldapauth" >> /etc/squid/squid.conf
 			;;
 		esac
         else

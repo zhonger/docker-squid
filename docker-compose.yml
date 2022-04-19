@@ -2,7 +2,7 @@ version: '3.2'
 
 services: 
   squid:
-    image: diouxx/squid
+    image: zhonger/squid
     container_name: squid
     hostname: squid
     ports:
@@ -10,4 +10,13 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+    environment: 
+      - LDAP_ENABLE=true
+      - LDAP_HOST=your.domain.com
+      - LDAP_PORT=389
+      - LDAP_BindDN="cn=admin,dc=yourdomian,dc=com"
+      - LDAP_BindPass="********"
+      - LDAP_DN="ou=Users,dc=yourdomain,dc=com"
+      - LDAP_ATTRIBUT="uid=%s"
+      - PROXY_NAME="Proxy Display Name"
     restart: always

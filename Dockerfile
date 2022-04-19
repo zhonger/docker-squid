@@ -1,7 +1,7 @@
 #Choose Debian
 FROM debian:latest
 
-LABEL maintainer="DiouxX - github@diouxx.be"
+LABEL maintainer="zhonger - zhonger@live.cn"
 
 #Don't ask questions during install
 ENV DEBIAN_FRONTEND noninteractive
@@ -10,8 +10,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV LDAP_ENABLE=false
 
 #Install Squid3
-RUN apt update \
-&& apt -y install ca-certificates squid3
+RUN apt-get update && \
+    apt-get -y install ca-certificates squid
 
 #Ports
 EXPOSE 3128
