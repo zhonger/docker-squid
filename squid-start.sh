@@ -11,6 +11,20 @@ function squid_config() {
         echo "forwarded_for off"
         echo "forwarded_for off" >> /etc/squid/squid.conf
 
+        if ${SQUID_SSH}
+        then
+                echo "acl SSL_ports port 22"
+                echo "acl Safe_ports port 22"
+                echo "acl SSL_ports port 22" >> /etc/squid/squid.conf
+                echo "acl Safe_ports port 22" >> /etc/squid/squid.conf
+
+        if ${SQUID_RSYNC}
+        then
+                echo "acl SSL_ports port 873"
+                echo "acl Safe_ports port 873"
+                echo "acl SSL_ports port 873" >> /etc/squid/squid.conf
+                echo "acl Safe_ports port 873" >> /etc/squid/squid.conf
+
 	if ${LDAP_ENABLE}
         then
 		echo "LDAP Enable"

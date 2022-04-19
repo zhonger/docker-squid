@@ -11,6 +11,8 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     environment: 
+      - SQUID_SSH=true
+      - SQUID_RSYNC=false
       - LDAP_ENABLE=true
       - LDAP_HOST=your.domain.com
       - LDAP_PORT=389
